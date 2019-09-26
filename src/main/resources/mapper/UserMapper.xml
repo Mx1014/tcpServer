@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.usr.dao.UserDao">
+
+
+
+	<resultMap id="UserResultMap" type="cn.usr.entity.User">
+		<id column="id" property="userId" jdbcType="INTEGER"/>
+		<result column="account" property="account" jdbcType="VARCHAR"/>
+		<result column="type_id" property="typeId" jdbcType="VARCHAR"/>
+		<result column="vip_level" property="vipLevel" jdbcType="INTEGER" />
+		<result column="auto_workorder" property="autoWorkOrder" jdbcType="INTEGER" />
+		<result column="if_have_resources" property="ifHaveResources" jdbcType="INTEGER" />
+	</resultMap>
+
+    <select id="queryUserById" resultMap="UserResultMap">
+		select
+	       iot_user.id,
+	       iot_user.account,
+	       iot_user.password,
+	       iot_user.type_id,
+	       iot_user.vip_level,
+	       iot_user.auto_workorder,
+-- 	       iot_user.if_have_resources,
+	       iot_pu2su.puid
+	    from
+	       iot_user
+	    left join
+	       iot_pu2su
+	    on
+	       iot_user.id = iot_pu2su.suid
+		where
+		   iot_user.id = #{uid}
+	</select>
+
+
+</mapper>

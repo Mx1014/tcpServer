@@ -1,0 +1,67 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /tcp
+
+spring:
+  redis:
+    database: 2
+    host: 47.100.232.98
+    port: 6379
+    password: foobared
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    timeout: 3000
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.101.174.113/newcloud?characterEncoding=UTF-8&useSSL=false
+    username: cloud1
+    password: Cloud123!@#
+
+
+mq:
+  addresses: 47.100.232.98
+  port: 5672
+  username: guest
+  password: guest
+  virtual-host: /
+  connection-timeout: 5000
+  publisher-confirms: false
+  exchange:
+    exchange_tcp: exchange_v19_v20
+    exchange_cache: exchange_cache_notice_api_fanout
+  queue:
+    tcp_center: V19ToV20
+    tcp_cache: TCPUpdateCache
+    center_tcp: V20ToV19
+  routingkey:
+    offline: offline
+    online: online
+    to_center_data: to_center_data
+    to_device_data: to_device_data
+    cache_device: key_cache_notice_api_fanout_device
+    cache_device_online: key_cache_notice_api_fanout_device_online
+
+
+mybatis:
+  typeAliasesPackage: cn.usr.entity
+  mapperLocations: classpath:mapper/*.xml
+
+
+
+cloud:
+  # 是否开启流量监控模式
+  flowmonitor: true
+  device:
+    # 设备连接在 connect_number_interval 区间内连接的次数，超过后会被置为无效设备
+    connect_number: 100
+    # 设备在此区间内计算连接次数 connect_number 如果超过就是被置为无效设备 ；单位秒
+    connect_number_interval_reset: 300
+    # 设备上传心跳时间，如果超时未发送数据会被踢下线
+    reader_idle_time: 72000
+

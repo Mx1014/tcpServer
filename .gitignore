@@ -1,0 +1,9 @@
+.idea/*
+logs/*
+target/classes/*
+target/maven-status/*
+target/test-classes/*
+*.iml
+.DS_Store
+*.properties
+*.original

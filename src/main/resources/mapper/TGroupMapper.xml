@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.usr.dao.TGroupDao">
+
+
+    <!-- 获得目标分组的对应分组ID -->
+    <select id="queryTargetGroupIdsByDid" resultType="String">
+      select 
+          DISTINCT pair_gid 
+      from 
+          iot_g2g 
+      left join 
+          iot_g2d 
+      on 
+          iot_g2g.gid=iot_g2d.gid 
+      where 
+          iot_g2d.did=#{did}
+   </select>
+
+
+    <!--查询组内设备列表-->
+    <select id="queryDidListByGroupIds" resultType="String">
+        SELECT
+        did
+        FROM
+        iot_g2d
+        WHERE
+        gid in
+        <foreach collection="gids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+
+
+</mapper>    
+    
